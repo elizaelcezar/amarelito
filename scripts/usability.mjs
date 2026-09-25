@@ -27,6 +27,7 @@ const ROUTES = [
   { key: "produto-maionese", path: "/produtos/maionese-artesanal" },
   { key: "carrinho", path: "/carrinho" },
   { key: "assinatura", path: "/assinatura" },
+  { key: "lancamento", path: "/lancamento" },
 ];
 
 mkdirSync(OUT, { recursive: true });
