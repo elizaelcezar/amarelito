@@ -1,17 +1,18 @@
 "use client";
 
 import { useState } from "react";
-import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { siteConfig, type Plan } from "@/config/site";
 import { getCategory, type Product } from "@/data/products";
 import { formatBRL } from "@/lib/format";
 import { useCart } from "@/lib/cart";
 import { planDiscountPercent, planPrice } from "@/lib/whatsapp";
-import { CheckIcon, MinusIcon, PlusIcon, WhatsappIcon } from "@/components/icons";
+import { MinusIcon, PlusIcon, WhatsappIcon } from "@/components/icons";
 
 export function ProductView({ product }: { product: Product }) {
   const category = getCategory(product.category);
   const { add } = useCart();
+  const router = useRouter();
 
   const [sizeKey, setSizeKey] = useState(product.sizes[0].key);
   const [plan, setPlan] = useState<Plan>("semanal");
@@ -27,9 +28,13 @@ export function ProductView({ product }: { product: Product }) {
   const effectivePlan: Plan = plans.includes(plan) ? plan : "avulso";
 
   function handleAdd() {
+    if (added) {
+      router.push("/carrinho");
+      return;
+    }
     add(product, size, effectivePlan, qty);
     setAdded(true);
-    window.setTimeout(() => setAdded(false), 3500);
+    window.setTimeout(() => setAdded(false), 5000);
   }
 
   return (
@@ -52,12 +57,9 @@ export function ProductView({ product }: { product: Product }) {
         <p className="mt-2 leading-relaxed text-cafe-soft">{product.description}</p>
 
         {product.subscriptionEligible && (
-          <div className="mt-4 rounded-xl bg-folha-light px-3 py-2.5 text-xs leading-relaxed text-folha">
-            🔁 <strong>Assinatura:</strong> entrega automática toda semana ou todo mês no dia que combinar no WhatsApp.{" "}
-            <strong>
-              -{planDiscountPercent("semanal")}% na semanal, -{planDiscountPercent("mensal")}% na mensal
-            </strong>
-            , sem fidelidade.
+          <div className="mt-4 rounded-xl bg-folha-light px-3 py-2 text-xs leading-relaxed text-folha">
+            🔁 <strong>Recorrente:</strong> recebe {planDiscountPercent("semanal")}% OFF na semanal,{" "}
+            {planDiscountPercent("mensal")}% na mensal · sem fidelidade.
           </div>
         )}
 
@@ -112,7 +114,7 @@ export function ProductView({ product }: { product: Product }) {
           <p className="mt-2 text-xs text-cafe-soft">
             {effectivePlan === "avulso"
               ? "Compra única, sem recorrência."
-              : `Você receberá toda ${effectivePlan === "semanal" ? "semana" : "mês"} no dia combinado. Cancela quando quiser no WhatsApp.`}
+              : `Recebe toda ${effectivePlan === "semanal" ? "semana" : "mês"}. Cancela no WhatsApp.`}
           </p>
         </fieldset>
 
@@ -134,24 +136,20 @@ export function ProductView({ product }: { product: Product }) {
             <span className="text-sm text-cream/70">{effectivePlan === "avulso" ? "Total" : `Total · ${effectivePlan}`}</span>
             <span className="font-display text-2xl font-semibold text-mel">{formatBRL(total)}</span>
           </div>
-          <button type="button" onClick={handleAdd} className="mt-3 w-full rounded-full bg-mel py-3.5 font-bold text-cafe">
+          <button type="button" onClick={handleAdd} className={`mt-3 w-full rounded-full py-3.5 font-bold ${added ? "bg-folha text-white" : "bg-mel text-cafe"}`}>
             {added ? (
-              <span className="flex items-center justify-center gap-2">
-                <CheckIcon size={18} /> Adicionado!
-              </span>
+              "✓ Ir pro carrinho →"
             ) : effectivePlan === "avulso" ? (
               "Adicionar ao carrinho"
             ) : (
               "Assinar e adicionar"
             )}
           </button>
-          <div className="mt-2 flex items-center justify-center gap-3 text-xs text-cream/60">
-            <Link href="/carrinho" className="hover:text-mel">Ir pro carrinho →</Link>
-            <span>·</span>
-            <a href={`https://wa.me/${siteConfig.whatsapp}`} target="_blank" rel="noopener noreferrer" className="flex items-center gap-1 hover:text-mel">
-              <WhatsappIcon size={13} /> Dúvidas
+          <p className="mt-2 text-center text-xs text-cream/70">
+            <a href={`https://wa.me/${siteConfig.whatsapp}`} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-1 underline-offset-2 hover:underline">
+              <WhatsappIcon size={13} /> Dúvidas no WhatsApp
             </a>
-          </div>
+          </p>
         </div>
       </div>
     </div>

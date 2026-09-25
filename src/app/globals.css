@@ -1,8 +1,9 @@
 @import "tailwindcss";
 
 @theme {
-  --color-cream: #fff9ef;
-  --color-cream-2: #fdf1dc;
+  /* fundo amarelo do app */
+  --color-cream: #fff1a8;
+  --color-cream-2: #ffe28f;
   --color-mel: #ffc44d;
   --color-mel-2: #ffda8a;
   --color-mel-dark: #f5a623;
