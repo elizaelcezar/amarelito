@@ -15,7 +15,7 @@ export default function HomePage() {
           <PinIcon size={13} /> {cityLabel(defaultCity)} · entrega hoje até 18h
         </span>
         <h1 className="mt-2.5 max-w-xl font-display text-[1.7rem] font-semibold leading-tight sm:text-4xl">
-          Olha a novidade, produtos fresquinhos por assinatura para você.
+          Produtos por assinatura fresquinhos para você.
         </h1>
         <p className="mt-2 text-sm text-cafe-soft sm:text-[15px]">
           Avulso ou assinado com <strong className="text-folha">-{semanal}%</strong>. Sem fidelidade.
