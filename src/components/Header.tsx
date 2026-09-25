@@ -21,8 +21,8 @@ export function Header() {
         <Link href="/assinatura" className="ml-3 hidden items-center gap-1.5 rounded-full bg-folha-light px-3 py-1.5 text-xs font-bold text-folha sm:inline-flex">
           🔁 Assinatura <span className="rounded-full bg-folha px-1.5 py-0.5 text-[10px] text-white">-{off}%</span>
         </Link>
-        <Link href="/#categorias" className="hidden text-sm font-bold text-cafe-soft hover:text-cafe sm:inline">
-          Categorias
+        <Link href="/#produtos" className="hidden text-sm font-bold text-cafe-soft hover:text-cafe sm:inline">
+          Produtos
         </Link>
 
         <Link href="/carrinho" aria-label="Carrinho" className="ml-auto relative flex h-10 w-10 items-center justify-center rounded-full bg-mel text-cafe">
