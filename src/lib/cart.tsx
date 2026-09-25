@@ -17,6 +17,7 @@ import {
   getCartSnapshot,
   getServerCartSnapshot,
   removeEntry,
+  setEntryPlan,
   setEntryQty,
   subscribeCart,
   type CartEntry,
@@ -39,6 +40,7 @@ interface CartContextValue {
   total: number;
   add: (product: Product, size: SizeOption, plan: Plan, qty?: number) => void;
   setQty: (slug: string, sizeKey: string, plan: Plan, qty: number) => void;
+  setPlan: (slug: string, sizeKey: string, fromPlan: Plan, toPlan: Plan) => void;
   remove: (slug: string, sizeKey: string, plan: Plan) => void;
   clear: () => void;
 }
@@ -84,6 +86,13 @@ export function CartProvider({ children }: { children: ReactNode }) {
     [],
   );
 
+  const setPlan = useCallback(
+    (slug: string, sizeKey: string, fromPlan: Plan, toPlan: Plan) => {
+      setEntryPlan(slug, sizeKey, fromPlan, toPlan);
+    },
+    [],
+  );
+
   const remove = useCallback((slug: string, sizeKey: string, plan: Plan) => {
     removeEntry(slug, sizeKey, plan);
   }, []);
@@ -98,10 +107,11 @@ export function CartProvider({ children }: { children: ReactNode }) {
       total: items.reduce((sum, item) => sum + item.lineTotal, 0),
       add,
       setQty,
+      setPlan,
       remove,
       clear,
     }),
-    [items, snapshot.hydrated, add, setQty, remove, clear],
+    [items, snapshot.hydrated, add, setQty, setPlan, remove, clear],
   );
 
   return <CartContext.Provider value={value}>{children}</CartContext.Provider>;

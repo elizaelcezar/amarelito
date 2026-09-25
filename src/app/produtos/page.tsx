@@ -13,15 +13,27 @@ export default async function ProdutosPage({ searchParams }: Props) {
   const visible = active ? products.filter((p) => p.category === active) : products;
 
   return (
-    <div className="mx-auto max-w-5xl px-4 pt-6 sm:px-6">
-      <h1 className="font-display text-2xl font-semibold">Produtos</h1>
-      <nav className="mt-3 flex gap-2 overflow-x-auto pb-1">
-        <Link href="/produtos" className={`shrink-0 rounded-full px-4 py-1.5 text-sm font-bold ${!active ? "bg-cafe text-white" : "border border-cafe/10 bg-white text-cafe-soft"}`}>Todos</Link>
+    <div className="mx-auto max-w-5xl px-4 sm:px-6">
+      <h1 className="pt-5 font-display text-2xl font-semibold">Produtos</h1>
+      <nav className="sticky top-14 z-30 -mx-4 mt-3 flex gap-2 overflow-x-auto bg-cream/95 px-4 py-2 backdrop-blur sm:-mx-6 sm:px-6">
+        <Link
+          href="/produtos"
+          className={`flex min-h-11 shrink-0 items-center rounded-full px-4 text-sm font-bold ${!active ? "bg-cafe text-white" : "border border-cafe/10 bg-white text-cafe-soft"}`}
+        >
+          Todos
+        </Link>
         {categories.map((c) => (
-          <Link key={c.key} href={`/produtos?categoria=${c.key}`} className={`shrink-0 rounded-full px-4 py-1.5 text-sm font-bold ${active === c.key ? "bg-cafe text-white" : "border border-cafe/10 bg-white text-cafe-soft"}`}>{c.emoji} {c.label}</Link>
+          <Link
+            key={c.key}
+            href={`/produtos?categoria=${c.key}`}
+            aria-pressed={active === c.key}
+            className={`flex min-h-11 shrink-0 items-center gap-1.5 rounded-full px-4 text-sm font-bold ${active === c.key ? "bg-cafe text-white" : "border border-cafe/10 bg-white text-cafe-soft"}`}
+          >
+            <span aria-hidden>{c.emoji}</span> {c.label}
+          </Link>
         ))}
       </nav>
-      <div className="mt-5 grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-4">
+      <div className="mt-3 grid grid-cols-2 gap-3 pb-4 sm:grid-cols-3 lg:grid-cols-4">
         {visible.map((p) => <ProductCard key={p.slug} product={p} />)}
       </div>
     </div>

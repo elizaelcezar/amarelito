@@ -119,6 +119,34 @@ export function removeEntry(slug: string, sizeKey: string, plan: Plan) {
   commit(snapshot.entries.filter((e) => !sameLine(e, slug, sizeKey, plan)));
 }
 
+export function setEntryPlan(
+  slug: string,
+  sizeKey: string,
+  fromPlan: Plan,
+  toPlan: Plan,
+) {
+  loadFromStorage();
+  if (fromPlan === toPlan) return;
+  const origin = snapshot.entries.find((e) =>
+    sameLine(e, slug, sizeKey, fromPlan),
+  );
+  if (!origin) return;
+  const target = snapshot.entries.find((e) =>
+    sameLine(e, slug, sizeKey, toPlan),
+  );
+  const entries: CartEntry[] = [];
+  for (const entry of snapshot.entries) {
+    if (entry === origin) {
+      if (!target) entries.push({ ...entry, plan: toPlan });
+    } else if (entry === target) {
+      entries.push({ ...entry, qty: entry.qty + origin.qty });
+    } else {
+      entries.push(entry);
+    }
+  }
+  commit(entries);
+}
+
 export function clearCart() {
   loadFromStorage();
   commit([]);

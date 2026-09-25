@@ -31,15 +31,15 @@ export default async function ProdutoPage({ params }: ProdutoPageProps) {
   if (!product) notFound();
 
   return (
-    <div className="mx-auto max-w-5xl px-4 pt-6 sm:px-6">
+    <div className="mx-auto max-w-5xl px-4 pb-20 pt-5 sm:px-6 md:pb-6">
       <Link
         href="/produtos"
-        className="inline-flex items-center gap-1.5 text-sm font-bold text-cafe-soft transition-colors hover:text-cafe"
+        className="inline-flex min-h-11 items-center gap-1.5 text-sm font-bold text-cafe-soft transition-colors hover:text-cafe"
       >
         <ArrowLeftIcon size={16} /> Voltar para os produtos
       </Link>
 
-      <div className="mt-4">
+      <div className="mt-1 md:mt-4">
         <ProductView key={product.slug} product={product} />
       </div>
     </div>

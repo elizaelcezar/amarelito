@@ -9,6 +9,7 @@ export interface CategoryMeta {
   label: string;
   emoji: string;
   blurb: string;
+  gradient: string;
 }
 
 export interface SizeOption {
@@ -31,11 +32,11 @@ export interface Product {
 }
 
 export const categories: CategoryMeta[] = [
-  { key: "sucos", label: "Sucos", emoji: "🍊", blurb: "Natural, sem açúcar." },
-  { key: "polpas", label: "Polpas", emoji: "🧊", blurb: "Congeladas, 100% fruta." },
-  { key: "maionese", label: "Maionese", emoji: "🥄", blurb: "Feita no dia." },
-  { key: "farofas", label: "Farofa", emoji: "🥜", blurb: "Crocante e caseira." },
-  { key: "sobremesas", label: "Sobremesa", emoji: "🍰", blurb: "Só fim de semana." },
+  { key: "sucos", label: "Sucos", emoji: "🍊", blurb: "Natural, sem açúcar.", gradient: "from-[#ffd88a] to-[#ffb03a]" },
+  { key: "polpas", label: "Polpas", emoji: "🍧", blurb: "Congeladas, 100% fruta.", gradient: "from-[#ffc2d6] to-[#ff8fab]" },
+  { key: "maionese", label: "Maionese", emoji: "🫙", blurb: "Feita no dia.", gradient: "from-[#fff6cf] to-[#ffc94d]" },
+  { key: "farofas", label: "Farofa", emoji: "🌽", blurb: "Crocante e caseira.", gradient: "from-[#ffe0b8] to-[#f5b267]" },
+  { key: "sobremesas", label: "Sobremesa", emoji: "🍰", blurb: "Só fim de semana.", gradient: "from-[#ffd9c2] to-[#ff9d5c]" },
 ];
 
 export const products: Product[] = [
@@ -112,7 +113,7 @@ export const products: Product[] = [
     name: "Maionese Artesanal",
     category: "maionese",
     description: "Feita no dia, com limão e toque de alho.",
-    emoji: "🥄",
+    emoji: "🫙",
     featured: true,
     subscriptionEligible: true,
     sizes: [
