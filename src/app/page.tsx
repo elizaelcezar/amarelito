@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { PinIcon } from "@/components/icons";
+import { CategoryIcon, PinIcon } from "@/components/icons";
 import { categories } from "@/data/products";
 import { defaultCity, cityLabel } from "@/data/serviceArea";
 import { siteConfig } from "@/config/site";
@@ -43,9 +43,9 @@ export default function HomePage() {
             >
               <span
                 aria-hidden
-                className="flex h-11 w-11 items-center justify-center rounded-xl bg-white/85 text-xl transition-transform group-hover:scale-110"
+                className="flex h-11 w-11 items-center justify-center rounded-xl bg-white/85 text-cafe transition-transform group-hover:scale-110"
               >
-                {cat.emoji}
+                <CategoryIcon category={cat.key} size={24} />
               </span>
               <span aria-hidden className="absolute right-3.5 top-3.5 text-sm font-bold text-cafe/45 transition-transform group-hover:translate-x-0.5">
                 →

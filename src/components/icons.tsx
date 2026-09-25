@@ -1,4 +1,5 @@
 import type { SVGProps } from "react";
+import type { Category } from "@/data/products";
 
 type IconProps = SVGProps<SVGSVGElement> & { size?: number };
 
@@ -130,4 +131,53 @@ export function ClockIcon(props: IconProps) {
       <path d="M12 7v5l3.5 2" />
     </svg>
   );
+}
+
+/** Ícones ilustrativos das categorias (garrafinha, saquinho, pote, marmitinha, bolo). */
+export function CategoryIcon({
+  category,
+  ...props
+}: IconProps & { category: Category }) {
+  switch (category) {
+    case "sucos":
+      return (
+        <svg {...base(props)}>
+          <path d="M10 2h4a1 1 0 0 1 1 1v1.6H9V3a1 1 0 0 1 1-1Z" />
+          <path d="M9 4.6v1L6.4 8.4a4.6 4.6 0 0 0-1.1 3v7A2.6 2.6 0 0 0 7.9 21h8.2a2.6 2.6 0 0 0 2.6-2.6v-7a4.6 4.6 0 0 0-1.1-3L15 5.6v-1" />
+          <path d="M5.5 13.4h13" />
+        </svg>
+      );
+    case "polpas":
+      return (
+        <svg {...base(props)}>
+          <rect x="8" y="2.5" width="8" height="2.6" rx="1.1" />
+          <path d="M8.6 5.1h6.8c1 3.7 1.6 7 1.6 9.4a4.6 4.6 0 0 1-4.6 4.6h-.8a4.6 4.6 0 0 1-4.6-4.6c0-2.4.6-5.7 1.6-9.4Z" />
+          <path d="M12 10.3v4M10.3 11.3l3.4 2M13.7 11.3l-3.4 2" />
+        </svg>
+      );
+    case "maionese":
+      return (
+        <svg {...base(props)}>
+          <rect x="7.5" y="3" width="9" height="2.8" rx="1.1" />
+          <path d="M8 5.8h8v11.7A2.5 2.5 0 0 1 13.5 20h-3a2.5 2.5 0 0 1-2.5-2.5Z" />
+          <rect x="9.8" y="10" width="4.4" height="4.4" rx="1.2" />
+        </svg>
+      );
+    case "farofas":
+      return (
+        <svg {...base(props)}>
+          <rect x="3.5" y="7" width="17" height="3.2" rx="1.2" />
+          <path d="M10.4 7V5.6a1.6 1.6 0 0 1 3.2 0V7" />
+          <path d="M5.2 10.2v6.3A3 3 0 0 0 8.2 19.5h7.6a3 3 0 0 0 3-3v-6.3" />
+        </svg>
+      );
+    case "sobremesas":
+      return (
+        <svg {...base(props)}>
+          <path d="M12 7.6 19 19H5Z" />
+          <path d="M8.7 14.5h6.6" />
+          <path d="M4.5 19.5h15" />
+        </svg>
+      );
+  }
 }

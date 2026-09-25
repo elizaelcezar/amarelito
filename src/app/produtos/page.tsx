@@ -1,6 +1,7 @@
 import Link from "next/link";
 import type { Metadata } from "next";
 import { ProductCard } from "@/components/ProductCard";
+import { CategoryIcon } from "@/components/icons";
 import { categories, products, type Category } from "@/data/products";
 
 export const metadata: Metadata = { title: "Produtos" };
@@ -29,7 +30,7 @@ export default async function ProdutosPage({ searchParams }: Props) {
             aria-pressed={active === c.key}
             className={`flex min-h-11 shrink-0 items-center gap-1.5 rounded-full px-4 text-sm font-bold ${active === c.key ? "bg-cafe text-white" : "border border-cafe/10 bg-white text-cafe-soft"}`}
           >
-            <span aria-hidden>{c.emoji}</span> {c.label}
+            <CategoryIcon category={c.key} size={16} aria-hidden /> {c.label}
           </Link>
         ))}
       </nav>
