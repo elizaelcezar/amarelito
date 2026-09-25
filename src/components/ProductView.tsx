@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import Link from "next/link";
-import { planLabels, siteConfig, type Plan } from "@/config/site";
+import { siteConfig, type Plan } from "@/config/site";
 import { getCategory, type Product } from "@/data/products";
 import { formatBRL } from "@/lib/format";
 import { useCart } from "@/lib/cart";
@@ -14,59 +14,55 @@ export function ProductView({ product }: { product: Product }) {
   const { add } = useCart();
 
   const [sizeKey, setSizeKey] = useState(product.sizes[0].key);
-  const [plan, setPlan] = useState<Plan>("avulso");
+  const [plan, setPlan] = useState<Plan>("semanal");
   const [qty, setQty] = useState(1);
   const [added, setAdded] = useState(false);
 
   const size = product.sizes.find((s) => s.key === sizeKey)!;
   const unitPrice = planPrice(plan, size.price);
   const total = unitPrice * qty;
-  const plans: Plan[] = product.subscriptionEligible
-    ? ["avulso", "semanal", "mensal"]
-    : ["avulso"];
+  const plans: Plan[] = product.subscriptionEligible ? ["avulso", "semanal", "mensal"] : ["avulso"];
+
+  // se o produto não aceita assinatura mas o estado é semanal, volta pra avulso
+  const effectivePlan: Plan = plans.includes(plan) ? plan : "avulso";
 
   function handleAdd() {
-    add(product, size, plan, qty);
+    add(product, size, effectivePlan, qty);
     setAdded(true);
     window.setTimeout(() => setAdded(false), 3500);
   }
 
   return (
     <div className="grid gap-6 md:grid-cols-2">
-      {/* Visual */}
       <div className="relative flex h-56 items-center justify-center overflow-hidden rounded-[2rem] bg-gradient-to-br from-[#ffd88a] to-[#ffb03a] sm:h-72">
         <span className="text-8xl sm:text-9xl">{product.emoji}</span>
         <div className="absolute left-4 top-4 flex flex-wrap gap-2">
           {product.weekendOnly && (
-            <span className="rounded-full bg-laranja px-3 py-1 text-xs font-bold text-white">
-              Só fim de semana
-            </span>
+            <span className="rounded-full bg-laranja px-3 py-1 text-xs font-bold text-white">Só fim de semana</span>
           )}
           {product.subscriptionEligible && (
-            <span className="rounded-full bg-folha px-3 py-1 text-xs font-bold text-white">
-              Aceita assinatura
-            </span>
+            <span className="rounded-full bg-folha px-3 py-1 text-xs font-bold text-white">🔁 Assinatura</span>
           )}
         </div>
       </div>
 
-      {/* Opções */}
       <div>
-        <span className="text-xs font-bold uppercase tracking-wider text-cafe-soft">
-          {category.label}
-        </span>
-        <h1 className="mt-1 font-display text-3xl font-semibold">
-          {product.name}
-        </h1>
-        <p className="mt-2 leading-relaxed text-cafe-soft">
-          {product.description}
-        </p>
+        <span className="text-xs font-bold uppercase tracking-wider text-cafe-soft">{category.label}</span>
+        <h1 className="mt-1 font-display text-3xl font-semibold">{product.name}</h1>
+        <p className="mt-2 leading-relaxed text-cafe-soft">{product.description}</p>
 
-        {/* Tamanho */}
-        <fieldset className="mt-6">
-          <legend className="font-display text-base font-semibold">
-            Escolha o tamanho
-          </legend>
+        {product.subscriptionEligible && (
+          <div className="mt-4 rounded-xl bg-folha-light px-3 py-2.5 text-xs leading-relaxed text-folha">
+            🔁 <strong>Assinatura:</strong> entrega automática toda semana ou todo mês no dia que combinar no WhatsApp.{" "}
+            <strong>
+              -{planDiscountPercent("semanal")}% na semanal, -{planDiscountPercent("mensal")}% na mensal
+            </strong>
+            , sem fidelidade.
+          </div>
+        )}
+
+        <fieldset className="mt-5">
+          <legend className="font-display text-base font-semibold">Tamanho</legend>
           <div className="mt-3 grid gap-2">
             {product.sizes.map((option) => {
               const selected = option.key === sizeKey;
@@ -75,137 +71,88 @@ export function ProductView({ product }: { product: Product }) {
                   key={option.key}
                   type="button"
                   onClick={() => setSizeKey(option.key)}
-                  className={`flex items-center justify-between rounded-2xl border-2 px-4 py-3 text-left transition-colors ${
-                    selected
-                      ? "border-mel-dark bg-mel/30"
-                      : "border-cafe/10 bg-white hover:border-mel"
-                  }`}
+                  className={`flex items-center justify-between rounded-2xl border px-4 py-3 text-left ${selected ? "border-mel-dark bg-mel/30" : "border-cafe/10 bg-white hover:border-mel"}`}
                 >
                   <span>
-                    <span className="block font-bold">{option.label}</span>
-                    <span className="block text-xs text-cafe-soft">
-                      {option.detail}
-                    </span>
+                    <span className="block text-sm font-bold">{option.label}</span>
+                    <span className="block text-xs text-cafe-soft">{option.detail}</span>
                   </span>
-                  <span className="font-display font-semibold">
-                    {formatBRL(planPrice(plan, option.price))}
-                  </span>
+                  <span className="text-sm font-bold">{formatBRL(planPrice(effectivePlan, option.price))}</span>
                 </button>
               );
             })}
           </div>
         </fieldset>
 
-        {/* Plano */}
-        <fieldset className="mt-6">
-          <legend className="font-display text-base font-semibold">
-            Como quer comprar?
-          </legend>
+        <fieldset className="mt-5">
+          <legend className="font-display text-base font-semibold">Recorrência</legend>
           <div className="mt-3 grid grid-cols-3 gap-2">
             {plans.map((option) => {
-              const selected = option === plan;
+              const selected = option === effectivePlan;
               const discount = planDiscountPercent(option);
+              const isRecommended = option === "semanal";
               return (
                 <button
                   key={option}
                   type="button"
                   onClick={() => setPlan(option)}
-                  className={`rounded-2xl border-2 px-2 py-3 text-center transition-colors ${
-                    selected
-                      ? "border-mel-dark bg-mel/30"
-                      : "border-cafe/10 bg-white hover:border-mel"
-                  }`}
+                  className={`relative rounded-2xl border px-2 py-3 text-center ${selected ? "border-folha bg-folha-light" : "border-cafe/10 bg-white hover:border-mel"}`}
                 >
-                  <span className="block text-sm font-bold">
-                    {option === "avulso" ? "Avulso" : option === "semanal" ? "Semanal" : "Mensal"}
-                  </span>
-                  <span
-                    className={`block text-[11px] font-semibold ${
-                      discount > 0 ? "text-folha" : "text-cafe-soft"
-                    }`}
-                  >
-                    {discount > 0 ? `-${discount}%` : "sem fidelidade"}
+                  {isRecommended && product.subscriptionEligible && (
+                    <span className="absolute -top-2 left-1/2 -translate-x-1/2 rounded-full bg-folha px-2 py-0.5 text-[10px] font-bold text-white">Recomendado</span>
+                  )}
+                  <span className="block pt-1 text-sm font-bold">{option === "avulso" ? "Avulso" : option === "semanal" ? "Semanal" : "Mensal"}</span>
+                  <span className={`block text-[11px] font-bold ${discount > 0 ? "text-folha" : "text-cafe-soft"}`}>
+                    {discount > 0 ? `-${discount}%` : "sem desconto"}
                   </span>
                 </button>
               );
             })}
           </div>
-          {plan !== "avulso" && (
-            <p className="mt-2 text-xs text-cafe-soft">
-              {planLabels[plan]} com {planDiscountPercent(plan)}% de desconto.
-              Você confirma a data de entrega pelo WhatsApp.
-            </p>
-          )}
+          <p className="mt-2 text-xs text-cafe-soft">
+            {effectivePlan === "avulso"
+              ? "Compra única, sem recorrência."
+              : `Você receberá toda ${effectivePlan === "semanal" ? "semana" : "mês"} no dia combinado. Cancela quando quiser no WhatsApp.`}
+          </p>
         </fieldset>
 
-        {/* Quantidade */}
-        <div className="mt-6 flex items-center justify-between rounded-2xl border border-cafe/10 bg-white px-4 py-3">
-          <span className="font-bold">Quantidade</span>
+        <div className="mt-5 flex items-center justify-between rounded-2xl border border-cafe/10 bg-white px-4 py-3">
+          <span className="text-sm font-bold">Quantidade</span>
           <div className="flex items-center gap-3">
-            <button
-              type="button"
-              aria-label="Diminuir"
-              onClick={() => setQty((q) => Math.max(1, q - 1))}
-              className="flex h-9 w-9 items-center justify-center rounded-full border border-cafe/15 text-cafe transition-colors hover:bg-mel/30"
-            >
+            <button type="button" aria-label="Diminuir" onClick={() => setQty((q) => Math.max(1, q - 1))} className="flex h-9 w-9 items-center justify-center rounded-full border border-cafe/15">
               <MinusIcon size={16} />
             </button>
-            <span className="w-6 text-center font-display text-lg font-semibold">
-              {qty}
-            </span>
-            <button
-              type="button"
-              aria-label="Aumentar"
-              onClick={() => setQty((q) => Math.min(99, q + 1))}
-              className="flex h-9 w-9 items-center justify-center rounded-full border border-cafe/15 text-cafe transition-colors hover:bg-mel/30"
-            >
+            <span className="w-6 text-center font-display text-lg font-semibold">{qty}</span>
+            <button type="button" aria-label="Aumentar" onClick={() => setQty((q) => Math.min(99, q + 1))} className="flex h-9 w-9 items-center justify-center rounded-full border border-cafe/15">
               <PlusIcon size={16} />
             </button>
           </div>
         </div>
 
-        {/* Total + ações */}
         <div className="mt-4 rounded-2xl bg-cafe px-4 py-4 text-cream">
           <div className="flex items-center justify-between">
-            <span className="text-sm text-cream/70">Total</span>
-            <span className="font-display text-2xl font-semibold text-mel">
-              {formatBRL(total)}
-            </span>
+            <span className="text-sm text-cream/70">{effectivePlan === "avulso" ? "Total" : `Total · ${effectivePlan}`}</span>
+            <span className="font-display text-2xl font-semibold text-mel">{formatBRL(total)}</span>
           </div>
-          <button
-            type="button"
-            onClick={handleAdd}
-            className="mt-3 w-full rounded-full bg-mel py-3.5 font-bold text-cafe transition-transform active:scale-95"
-          >
+          <button type="button" onClick={handleAdd} className="mt-3 w-full rounded-full bg-mel py-3.5 font-bold text-cafe">
             {added ? (
               <span className="flex items-center justify-center gap-2">
                 <CheckIcon size={18} /> Adicionado!
               </span>
-            ) : (
+            ) : effectivePlan === "avulso" ? (
               "Adicionar ao carrinho"
+            ) : (
+              "Assinar e adicionar"
             )}
           </button>
           <div className="mt-2 flex items-center justify-center gap-3 text-xs text-cream/60">
-            <Link href="/carrinho" className="hover:text-mel">
-              Ir pro carrinho →
-            </Link>
-            <span aria-hidden>·</span>
-            <a
-              href={`https://wa.me/${siteConfig.whatsapp}`}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="flex items-center gap-1 hover:text-mel"
-            >
+            <Link href="/carrinho" className="hover:text-mel">Ir pro carrinho →</Link>
+            <span>·</span>
+            <a href={`https://wa.me/${siteConfig.whatsapp}`} target="_blank" rel="noopener noreferrer" className="flex items-center gap-1 hover:text-mel">
               <WhatsappIcon size={13} /> Dúvidas
             </a>
           </div>
         </div>
-
-        {product.weekendOnly && (
-          <p className="mt-3 rounded-xl bg-laranja/10 px-3 py-2 text-xs font-semibold text-laranja-dark">
-            🍰 Sobremesa de fim de semana: entregas de sexta a domingo.
-          </p>
-        )}
       </div>
     </div>
   );
