@@ -1,9 +1,8 @@
 /**
- * CATÁLOGO — edite os produtos, tamanhos e preços aqui.
- * Preços são exemplos: ajuste conforme a sua operação.
+ * CATÁLOGO — edite produtos, tamanhos e preços aqui.
  */
 
-export type Category = "sucos" | "maionese" | "farofas" | "sobremesas";
+export type Category = "sucos" | "polpas" | "maionese" | "farofas" | "sobremesas";
 
 export interface CategoryMeta {
   key: Category;
@@ -14,9 +13,7 @@ export interface CategoryMeta {
 
 export interface SizeOption {
   key: string;
-  /** "Pequeno" para sucos, "Individual" para os demais */
   label: string;
-  /** Ex.: "500ml", "serve 1 pessoa" */
   detail: string;
   price: number;
 }
@@ -29,36 +26,16 @@ export interface Product {
   emoji: string;
   sizes: SizeOption[];
   featured?: boolean;
-  /** Sobremesas só são produzidas/entregadas no fim de semana */
   weekendOnly?: boolean;
   subscriptionEligible?: boolean;
 }
 
 export const categories: CategoryMeta[] = [
-  {
-    key: "sucos",
-    label: "Sucos naturais",
-    emoji: "🍊",
-    blurb: "Laranja espremida na hora, sem açúcar e sem conservantes.",
-  },
-  {
-    key: "maionese",
-    label: "Maionese",
-    emoji: "🥄",
-    blurb: "Feita à mão, com ingredientes de verdade.",
-  },
-  {
-    key: "farofas",
-    label: "Farofas",
-    emoji: "🥜",
-    blurb: "Crocantes e gostosas, do jeito caseiro.",
-  },
-  {
-    key: "sobremesas",
-    label: "Sobremesas",
-    emoji: "🍰",
-    blurb: "Chuchu no fim de semana: só sexta, sábado e domingo.",
-  },
+  { key: "sucos", label: "Sucos", emoji: "🍊", blurb: "Natural, sem açúcar." },
+  { key: "polpas", label: "Polpas", emoji: "🧊", blurb: "Congeladas, 100% fruta." },
+  { key: "maionese", label: "Maionese", emoji: "🥄", blurb: "Feita no dia." },
+  { key: "farofas", label: "Farofas", emoji: "🥜", blurb: "Crocante e caseira." },
+  { key: "sobremesas", label: "Sobremesas", emoji: "🍰", blurb: "Só fim de semana." },
 ];
 
 export const products: Product[] = [
@@ -66,71 +43,118 @@ export const products: Product[] = [
     slug: "suco-de-laranja-natural",
     name: "Suco de Laranja Natural",
     category: "sucos",
-    description:
-      "Laranja espremida na hora, doce naturalmente. Sem açúcar, sem água, sem conservantes — só laranja de verdade, entregue geladinho.",
+    description: "Só laranja espremida na hora, geladinho.",
     emoji: "🍊",
     featured: true,
     subscriptionEligible: true,
     sizes: [
-      { key: "p", label: "Pequeno", detail: "500ml · 1 pessoa", price: 9 },
-      { key: "m", label: "Médio", detail: "1L · 2 pessoas", price: 16 },
-      { key: "g", label: "Grande", detail: "2L · família", price: 28 },
+      { key: "p", label: "Pequeno", detail: "500 ml", price: 9 },
+      { key: "m", label: "Médio", detail: "1 L", price: 16 },
+      { key: "g", label: "Grande", detail: "2 L", price: 28 },
+    ],
+  },
+  {
+    slug: "polpa-de-morango",
+    name: "Polpa de Morango",
+    category: "polpas",
+    description: "Morango selecionado, sem açúcar. Congelada.",
+    emoji: "🍓",
+    featured: true,
+    subscriptionEligible: true,
+    sizes: [
+      { key: "i", label: "Individual", detail: "250 g", price: 10 },
+      { key: "c", label: "Casal", detail: "500 g", price: 18 },
+      { key: "f", label: "Família", detail: "1 kg", price: 32 },
+    ],
+  },
+  {
+    slug: "polpa-de-maracuja",
+    name: "Polpa de Maracujá",
+    category: "polpas",
+    description: "Azedinho na medida, puro maracujá.",
+    emoji: "🧡",
+    featured: true,
+    subscriptionEligible: true,
+    sizes: [
+      { key: "i", label: "Individual", detail: "250 g", price: 10 },
+      { key: "c", label: "Casal", detail: "500 g", price: 18 },
+      { key: "f", label: "Família", detail: "1 kg", price: 32 },
+    ],
+  },
+  {
+    slug: "polpa-de-manga",
+    name: "Polpa de Manga",
+    category: "polpas",
+    description: "Manga madura, doce e cremosa.",
+    emoji: "🥭",
+    subscriptionEligible: true,
+    sizes: [
+      { key: "i", label: "Individual", detail: "250 g", price: 10 },
+      { key: "c", label: "Casal", detail: "500 g", price: 18 },
+      { key: "f", label: "Família", detail: "1 kg", price: 32 },
+    ],
+  },
+  {
+    slug: "polpa-de-goiaba",
+    name: "Polpa de Goiaba",
+    category: "polpas",
+    description: "Goiaba vermelha, aroma de fruta fresca.",
+    emoji: "🍈",
+    subscriptionEligible: true,
+    sizes: [
+      { key: "i", label: "Individual", detail: "250 g", price: 10 },
+      { key: "c", label: "Casal", detail: "500 g", price: 18 },
+      { key: "f", label: "Família", detail: "1 kg", price: 32 },
     ],
   },
   {
     slug: "maionese-artesanal",
     name: "Maionese Artesanal",
     category: "maionese",
-    description:
-      "Feita à mão no dia, com ovos frescos, óleo, limão e um toque de alho. Sabor de feira, sem conservantes artificiais.",
+    description: "Feita no dia, com limão e toque de alho.",
     emoji: "🥄",
     featured: true,
     subscriptionEligible: true,
     sizes: [
-      { key: "i", label: "Individual", detail: "300g · 1 pessoa", price: 14 },
-      { key: "c", label: "Casal", detail: "600g · 2 pessoas", price: 24 },
-      { key: "f", label: "Família", detail: "1kg · família", price: 38 },
+      { key: "i", label: "Individual", detail: "300 g", price: 14 },
+      { key: "c", label: "Casal", detail: "600 g", price: 24 },
+      { key: "f", label: "Família", detail: "1 kg", price: 38 },
     ],
   },
   {
     slug: "farofa-de-bacon",
     name: "Farofa de Bacon",
     category: "farofas",
-    description:
-      "Bacon crocante, cebola dourada e farinha de mandioca torrada na hora. Acompanha o que você quiser.",
+    description: "Bacon crocante e mandioca torrada.",
     emoji: "🥓",
     featured: true,
     subscriptionEligible: true,
     sizes: [
-      { key: "i", label: "Individual", detail: "300g · 1 pessoa", price: 16 },
-      { key: "c", label: "Casal", detail: "600g · 2 pessoas", price: 28 },
-      { key: "f", label: "Família", detail: "1kg · família", price: 42 },
+      { key: "i", label: "Individual", detail: "300 g", price: 16 },
+      { key: "c", label: "Casal", detail: "600 g", price: 28 },
+      { key: "f", label: "Família", detail: "1 kg", price: 42 },
     ],
   },
   {
     slug: "farofa-de-ovo-com-cebolinha",
     name: "Farofa de Ovo com Cebolinha",
     category: "farofas",
-    description:
-      "Ovo desfiado, cebolinha fresca e mandioca torrada. A opção leve da casa, vegetariana e cheia de sabor.",
+    description: "Leve, vegetariana e bem temperada.",
     emoji: "🍳",
     subscriptionEligible: true,
     sizes: [
-      { key: "i", label: "Individual", detail: "300g · 1 pessoa", price: 14 },
-      { key: "c", label: "Casal", detail: "600g · 2 pessoas", price: 24 },
-      { key: "f", label: "Família", detail: "1kg · família", price: 36 },
+      { key: "i", label: "Individual", detail: "300 g", price: 14 },
+      { key: "c", label: "Casal", detail: "600 g", price: 24 },
+      { key: "f", label: "Família", detail: "1 kg", price: 36 },
     ],
   },
   {
     slug: "pudim-de-leite-condensado",
     name: "Pudim de Leite Condensado",
     category: "sobremesas",
-    description:
-      "Cremoso, com calda de caramelo queimado na medida. Feito sob encomenda para chegar no fim de semana.",
+    description: "Cremoso com calda de caramelo. Só fds.",
     emoji: "🍮",
-    featured: true,
     weekendOnly: true,
-    subscriptionEligible: false,
     sizes: [
       { key: "i", label: "Individual", detail: "2 porções", price: 18 },
       { key: "c", label: "Casal", detail: "4 porções", price: 32 },
@@ -141,15 +165,13 @@ export const products: Product[] = [
     slug: "brownie-com-chocolate",
     name: "Brownie com Chocolate",
     category: "sobremesas",
-    description:
-      "Chocolate meio amargo, casquinha crocante por fora e interior úmido. Assado no dia, só no fim de semana.",
+    description: "Casquinha crocante, interior úmido. Só fds.",
     emoji: "🍫",
     weekendOnly: true,
-    subscriptionEligible: false,
     sizes: [
-      { key: "i", label: "Individual", detail: "2 unidades", price: 16 },
-      { key: "c", label: "Casal", detail: "6 unidades", price: 42 },
-      { key: "f", label: "Família", detail: "12 unidades", price: 78 },
+      { key: "i", label: "Individual", detail: "2 un", price: 16 },
+      { key: "c", label: "Casal", detail: "6 un", price: 42 },
+      { key: "f", label: "Família", detail: "12 un", price: 78 },
     ],
   },
 ];

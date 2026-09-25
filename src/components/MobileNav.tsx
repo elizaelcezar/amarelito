@@ -2,13 +2,12 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { CartIcon, HomeIcon, RepeatIcon, StoreIcon } from "@/components/icons";
+import { CartIcon, HomeIcon, StoreIcon } from "@/components/icons";
 import { useCart } from "@/lib/cart";
 
 const tabs = [
   { href: "/", label: "Início", icon: HomeIcon },
-  { href: "/produtos", label: "Produtos", icon: StoreIcon },
-  { href: "/assinatura", label: "Assinar", icon: RepeatIcon },
+  { href: "/#cardapio", label: "Cardápio", icon: StoreIcon },
   { href: "/carrinho", label: "Carrinho", icon: CartIcon },
 ];
 
@@ -17,32 +16,27 @@ export function MobileNav() {
   const { count } = useCart();
 
   return (
-    <nav className="safe-bottom fixed inset-x-0 bottom-0 z-40 border-t border-cafe/10 bg-white/95 backdrop-blur-md md:hidden">
-      <ul className="mx-auto grid max-w-lg grid-cols-4">
+    <nav className="safe-bottom fixed inset-x-0 bottom-0 z-40 border-t border-cafe/10 bg-white/95 backdrop-blur md:hidden">
+      <ul className="mx-auto grid max-w-md grid-cols-3">
         {tabs.map((tab) => {
           const active =
-            tab.href === "/" ? pathname === "/" : pathname.startsWith(tab.href);
+            tab.href === "/" ? pathname === "/" : pathname.startsWith(tab.href.replace("/#", "/"));
           const Icon = tab.icon;
           return (
             <li key={tab.href}>
               <Link
                 href={tab.href}
-                className={`relative flex flex-col items-center gap-0.5 py-2.5 text-[11px] font-bold transition-colors ${
-                  active ? "text-laranja" : "text-cafe-soft"
-                }`}
+                className={`flex flex-col items-center gap-0.5 py-2.5 text-[11px] font-bold ${active ? "text-laranja" : "text-cafe-soft"}`}
               >
                 <span className="relative">
                   <Icon size={22} />
                   {tab.href === "/carrinho" && count > 0 && (
-                    <span className="absolute -right-2.5 -top-1.5 flex h-4 min-w-4 items-center justify-center rounded-full bg-laranja px-1 text-[10px] font-bold text-white">
+                    <span className="absolute -right-2.5 -top-1 flex h-4 min-w-4 items-center justify-center rounded-full bg-laranja px-1 text-[10px] font-bold text-white">
                       {count}
                     </span>
                   )}
                 </span>
                 {tab.label}
-                {active && (
-                  <span className="absolute top-0 h-1 w-8 rounded-b-full bg-mel" />
-                )}
               </Link>
             </li>
           );
