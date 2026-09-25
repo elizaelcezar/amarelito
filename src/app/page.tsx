@@ -14,8 +14,8 @@ export default function HomePage() {
         <span className="inline-flex items-center gap-1.5 rounded-full bg-white/90 px-3 py-1 text-xs font-bold text-folha">
           <PinIcon size={13} /> {cityLabel(defaultCity)} · entrega hoje até 18h
         </span>
-        <h1 className="mt-2.5 max-w-xl font-display text-[1.7rem] font-semibold leading-none sm:text-4xl">
-          Fresquinho na sua porta, toda semana.
+        <h1 className="mt-2.5 max-w-xl font-display text-[1.7rem] font-semibold leading-tight sm:text-4xl">
+          Olha a novidade, produtos fresquinhos por assinatura para você.
         </h1>
         <p className="mt-2 text-sm text-cafe-soft sm:text-[15px]">
           Avulso ou assinado com <strong className="text-folha">-{semanal}%</strong>. Sem fidelidade.
