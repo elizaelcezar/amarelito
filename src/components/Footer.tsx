@@ -14,7 +14,7 @@ export function Footer() {
           <span className="text-sm text-cafe-soft">· {cityLabel(defaultCity)}</span>
         </div>
         <div className="flex flex-wrap gap-3 text-sm font-bold text-cafe-soft">
-          <Link href="/#cardapio" className="hover:text-cafe">Cardápio</Link>
+          <Link href="/#categorias" className="hover:text-cafe">Categorias</Link>
           <Link href="/produtos" className="hover:text-cafe">Todos os produtos</Link>
           <a href={`https://wa.me/${siteConfig.whatsapp}`} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-1.5 text-folha hover:underline">
             <WhatsappIcon size={14} /> {siteConfig.whatsappDisplay}

@@ -34,8 +34,8 @@ export const categories: CategoryMeta[] = [
   { key: "sucos", label: "Sucos", emoji: "🍊", blurb: "Natural, sem açúcar." },
   { key: "polpas", label: "Polpas", emoji: "🧊", blurb: "Congeladas, 100% fruta." },
   { key: "maionese", label: "Maionese", emoji: "🥄", blurb: "Feita no dia." },
-  { key: "farofas", label: "Farofas", emoji: "🥜", blurb: "Crocante e caseira." },
-  { key: "sobremesas", label: "Sobremesas", emoji: "🍰", blurb: "Só fim de semana." },
+  { key: "farofas", label: "Farofa", emoji: "🥜", blurb: "Crocante e caseira." },
+  { key: "sobremesas", label: "Sobremesa", emoji: "🍰", blurb: "Só fim de semana." },
 ];
 
 export const products: Product[] = [
