@@ -29,7 +29,7 @@ export default function AssinaturaPage() {
           <RepeatIcon size={13} /> Assinatura Amarelito
         </span>
         <h1 className="mt-2.5 max-w-lg font-display text-[1.7rem] font-semibold leading-tight sm:text-4xl">
-          Nunca mais acabe o que falta em casa
+          Fique sempre abastecido.
         </h1>
         <p className="mt-1.5 max-w-md text-sm text-cafe-soft sm:text-base">
           Escolha a frequência, receba com desconto e cancele no WhatsApp.
