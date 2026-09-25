@@ -31,8 +31,8 @@ export const viewport: Viewport = {
 
 export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
-    <html lang="pt-BR" className="h-full antialiased">
-      <body className="flex min-h-full flex-col">
+    <html lang="pt-BR" className="h-full antialiased" suppressHydrationWarning>
+      <body className="flex min-h-full flex-col" suppressHydrationWarning>
         <CartProvider>
           <Header />
           <main className="flex-1 pb-16 md:pb-0">{children}</main>
