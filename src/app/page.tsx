@@ -31,7 +31,7 @@ export default function HomePage() {
           <strong className="text-folha">{mensal}% OFF na mensal</strong>. Avulso quando quiser, sem fidelidade.
         </p>
         <div className="mt-5 flex flex-wrap gap-2.5">
-          <Link href="#produtos" className="rounded-full bg-cafe px-6 py-3 text-sm font-bold text-white">
+          <Link href="/produtos" className="rounded-full bg-cafe px-6 py-3 text-sm font-bold text-white">
             Ver produtos
           </Link>
           <Link href="/assinatura" className="rounded-full border border-cafe/15 bg-white px-6 py-3 text-sm font-bold text-cafe">
@@ -60,8 +60,8 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* Produtos — categorias como porta de entrada */}
-      <section id="produtos" className="scroll-mt-20 pt-8">
+      {/* Categorias — porta de entrada para /produtos */}
+      <section id="categorias" className="scroll-mt-20 pt-8">
         <h2 className="font-display text-xl font-semibold">O que você vai pedir hoje?</h2>
         <p className="mt-1 text-sm text-cafe-soft">Toque na categoria para ver os sabores e tamanhos.</p>
 
