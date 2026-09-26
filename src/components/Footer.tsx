@@ -1,4 +1,3 @@
-import Link from "next/link";
 import { Logo } from "@/components/Logo";
 import { WhatsappIcon } from "@/components/icons";
 import { siteConfig } from "@/config/site";
@@ -14,9 +13,6 @@ export function Footer() {
           <span className="text-sm text-cafe-soft">· {cityLabel(defaultCity)}</span>
         </div>
         <div className="flex flex-wrap gap-3 text-sm font-bold text-cafe-soft">
-          <Link href="/produtos" className="hover:text-cafe">Produtos</Link>
-          <Link href="/assinatura" className="hover:text-cafe">Assinatura</Link>
-          <Link href="/lancamento" className="hover:text-cafe">Lista de espera</Link>
           <a href={`https://wa.me/${siteConfig.whatsapp}`} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-1.5 text-folha hover:underline">
             <WhatsappIcon size={14} /> {siteConfig.whatsappDisplay}
           </a>
