@@ -1,5 +1,6 @@
 import { cityLabel, defaultCity, serviceArea } from "@/data/serviceArea";
 import { PinIcon } from "@/components/icons";
+import { CoverageRequestForm } from "@/components/CoverageRequestForm";
 
 export function CoverageSection() {
   return (
@@ -46,6 +47,7 @@ export function CoverageSection() {
           {serviceArea.note && (
             <p className="mt-2.5 text-xs leading-relaxed text-cafe-soft">{serviceArea.note}</p>
           )}
+          <CoverageRequestForm />
         </div>
       </details>
     </section>
