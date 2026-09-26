@@ -19,7 +19,7 @@ const steps = [
 export default function AssinaturaPage() {
   const plans = [
     { plan: "semanal" as const, title: "Toda semana", text: "Maior desconto, para quem pede sempre." },
-    { plan: "mensal" as const, title: "Todo mês", text: "Para estocar o essencial com uma entrega por mês." },
+    { plan: "mensal" as const, title: "Todo mês", text: "Desconto leve, uma vez no mês." },
   ];
 
   return (
