@@ -11,10 +11,11 @@ export const siteConfig = {
   whatsappDisplay: "(41) 99999-9999",
   instagram: "",
   address: "Pinhais - PR",
-  /** Descontos aplicados nas assinaturas (fração: 0.10 = 10%) */
+  /** Descontos aplicados nas assinaturas (fração: 0.10 = 10%).
+   * Semanal maior que mensal: quem recebe toda semana pede ~4x mais. */
   discounts: {
-    semanal: 0.1,
-    mensal: 0.15,
+    semanal: 0.12,
+    mensal: 0.08,
   },
 } as const;
 

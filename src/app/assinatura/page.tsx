@@ -7,7 +7,7 @@ import { RepeatIcon } from "@/components/icons";
 export const metadata: Metadata = {
   title: "Assinatura",
   description:
-    "Assine semanal (-10%) ou mensal (-15%) com desconto, sem fidelidade. Peça pelo WhatsApp.",
+    "Assine semanal (-12%) ou mensal (-8%) com desconto, sem fidelidade. Peça pelo WhatsApp.",
 };
 
 const steps = [
@@ -18,8 +18,8 @@ const steps = [
 
 export default function AssinaturaPage() {
   const plans = [
-    { plan: "semanal" as const, title: "Toda semana", text: "Recebe no mesmo dia da semana." },
-    { plan: "mensal" as const, title: "Todo mês", text: "Maior desconto do site." },
+    { plan: "semanal" as const, title: "Toda semana", text: "Maior desconto do site. Pra quem pede sempre." },
+    { plan: "mensal" as const, title: "Todo mês", text: "Prático, uma entrega por mês." },
   ];
 
   return (

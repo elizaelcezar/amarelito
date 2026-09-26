@@ -4,19 +4,19 @@ import { WaitlistForm } from "@/components/WaitlistForm";
 import { CoverageSection } from "@/components/CoverageSection";
 import { CheckIcon, PinIcon, RepeatIcon, StarIcon } from "@/components/icons";
 import { cityLabel, defaultCity } from "@/data/serviceArea";
-import { siteConfig } from "@/config/site";
+import { planDiscountPercent } from "@/lib/whatsapp";
 
 export const metadata: Metadata = {
   title: "Lista de espera da assinatura",
   description:
-    "Entre na lista da assinatura Amarelito: -10% na semanal, -15% na mensal, sem fidelidade. Deixe seu nome e confirme pelo WhatsApp.",
+    "Entre na lista da assinatura Amarelito: -12% na semanal, -8% na mensal, sem fidelidade. Deixe seu nome e confirme pelo WhatsApp.",
 };
 
 const benefits = [
   {
     icon: StarIcon,
     title: "Desconto de verdade",
-    text: "-10% na semanal e -15% na mensal, em cada entrega.",
+    text: "-12% na semanal e -8% na mensal, em cada entrega.",
   },
   {
     icon: RepeatIcon,
@@ -33,7 +33,8 @@ const benefits = [
 const steps = ["Deixe seu nome", "Confirme no WhatsApp", "Receba toda semana com desconto"];
 
 export default function LancamentoPage() {
-  const semanal = Math.round(siteConfig.discounts.semanal * 100);
+  const semanal = planDiscountPercent("semanal");
+  const mensal = planDiscountPercent("mensal");
 
   return (
     <div className="mx-auto max-w-5xl px-4 pb-28 pt-4 sm:px-6 md:pb-10">
@@ -48,7 +49,7 @@ export default function LancamentoPage() {
         </h1>
         <p className="mt-2.5 max-w-md text-sm text-cafe-soft sm:text-base">
           Entre na lista e garanta <strong className="text-folha">-{semanal}%</strong> na
-          semanal e <strong className="text-folha">-15%</strong> na mensal, sem fidelidade.
+          semanal e <strong className="text-folha">-{mensal}%</strong> na mensal, sem fidelidade.
         </p>
 
         <div className="mt-5 grid grid-cols-2 gap-2.5 sm:w-fit">
@@ -124,7 +125,7 @@ export default function LancamentoPage() {
       <div className="fixed inset-x-0 bottom-[60px] z-40 flex items-center gap-3 border-t border-cafe/10 bg-white/95 px-4 py-2.5 backdrop-blur md:hidden">
         <div className="min-w-0">
           <div className="font-display text-base font-semibold leading-tight">
-            Assine com -{semanal}% / -15%
+            Assine com -{semanal}% / -{mensal}%
           </div>
           <div className="truncate text-[11px] text-cafe-soft">Sem fidelidade, cancele quando quiser</div>
         </div>

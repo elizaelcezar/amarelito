@@ -50,12 +50,12 @@ export default function CarrinhoPage() {
     [items],
   );
 
-  // quanto daria pra economizar convertendo itens avulsos elegíveis pra mensal
+  // quanto daria pra economizar convertendo itens avulsos elegíveis pra semanal (maior desconto)
   const potentialSaving = useMemo(
     () =>
       items.reduce((sum, item) => {
         if (item.entry.plan !== "avulso" || !item.product.subscriptionEligible) return sum;
-        return sum + (item.size.price - planPrice("mensal", item.size.price)) * item.entry.qty;
+        return sum + (item.size.price - planPrice("semanal", item.size.price)) * item.entry.qty;
       }, 0),
     [items],
   );
