@@ -32,7 +32,7 @@ export default function AssinaturaPage() {
           Fique sempre abastecido.
         </h1>
         <p className="mt-1.5 max-w-md text-sm text-cafe-soft sm:text-base">
-          Escolha a frequência, receba com desconto e cancele no WhatsApp.
+          Escolha a frequência e receba com desconto.
         </p>
       </header>
 
