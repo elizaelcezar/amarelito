@@ -7,8 +7,8 @@ import { useCart } from "@/lib/cart";
 
 const tabs = [
   { href: "/", label: "Início", icon: HomeIcon },
-  { href: "/assinatura", label: "Assinar", icon: RepeatIcon },
   { href: "/produtos", label: "Produtos", icon: StoreIcon },
+  { href: "/assinatura", label: "Assinar", icon: RepeatIcon },
   { href: "/carrinho", label: "Carrinho", icon: CartIcon },
 ];
 

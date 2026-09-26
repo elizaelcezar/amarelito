@@ -24,8 +24,8 @@ export default function HomePage() {
           <Link href="/produtos" className="rounded-full bg-cafe px-5 py-3 text-center text-sm font-bold text-white">
             Ver produtos
           </Link>
-          <Link href="/assinatura" className="rounded-full border border-cafe/15 bg-white px-5 py-3 text-center text-sm font-bold text-cafe">
-            Assinar -{semanal}%
+          <Link href="/assinatura" className="btn-shine rounded-full bg-laranja px-5 py-3 text-center text-sm font-bold text-white">
+            Conhecer
           </Link>
         </div>
       </section>
@@ -39,22 +39,21 @@ export default function HomePage() {
             <Link
               key={cat.key}
               href={`/produtos?categoria=${cat.key}`}
-              className={`group relative flex flex-col overflow-hidden rounded-[1.4rem] bg-gradient-to-br ${cat.gradient} p-3.5`}
+              className={`group flex items-center gap-3 overflow-hidden rounded-[1.4rem] bg-gradient-to-br ${cat.gradient} p-3.5`}
             >
               <span
                 aria-hidden
-                className="flex h-11 w-11 items-center justify-center rounded-xl bg-white/85 text-cafe transition-transform group-hover:scale-110"
+                className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-white/85 text-cafe transition-transform group-hover:scale-110"
               >
                 <CategoryIcon category={cat.key} size={24} />
               </span>
-              <span aria-hidden className="absolute right-3.5 top-3.5 text-sm font-bold text-cafe/45 transition-transform group-hover:translate-x-0.5">
-                →
-              </span>
-              <span className="mt-3 block font-display text-[15px] font-semibold leading-tight text-cafe">
-                {cat.label}
-              </span>
-              <span className="mt-0.5 block text-[11px] font-semibold leading-snug text-cafe/70">
-                {cat.blurb}
+              <span className="min-w-0">
+                <span className="block font-display text-[15px] font-semibold leading-tight text-cafe">
+                  {cat.label}
+                </span>
+                <span className="mt-0.5 block text-[11px] font-semibold leading-snug text-cafe/70">
+                  {cat.blurb}
+                </span>
               </span>
             </Link>
           ))}
