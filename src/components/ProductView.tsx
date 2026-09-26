@@ -7,7 +7,7 @@ import { getCategory, type Product } from "@/data/products";
 import { formatBRL } from "@/lib/format";
 import { useCart } from "@/lib/cart";
 import { planDiscountPercent, planPrice } from "@/lib/whatsapp";
-import { MinusIcon, PlusIcon, RepeatIcon, WhatsappIcon } from "@/components/icons";
+import { MinusIcon, PlusIcon, WhatsappIcon } from "@/components/icons";
 
 const planNames: Record<Plan, string> = {
   avulso: "Avulso",
@@ -58,11 +58,6 @@ export function ProductView({ product }: { product: Product }) {
           {product.weekendOnly && (
             <span className="rounded-full bg-laranja px-3 py-1 text-xs font-bold text-white">Só fim de semana</span>
           )}
-          {product.subscriptionEligible && (
-            <span className="flex items-center gap-1.5 rounded-full bg-folha px-3 py-1 text-xs font-bold text-white">
-              <RepeatIcon size={13} /> Assinatura
-            </span>
-          )}
         </div>
       </div>
 
@@ -85,6 +80,8 @@ export function ProductView({ product }: { product: Product }) {
           <div className="mt-2 grid gap-2">
             {product.sizes.map((option) => {
               const selected = option.key === sizeKey;
+              const discounted = planPrice(effectivePlan, option.price);
+              const hasOff = discounted < option.price;
               return (
                 <button
                   key={option.key}
@@ -96,7 +93,10 @@ export function ProductView({ product }: { product: Product }) {
                   <span className="text-sm font-bold">
                     {option.label} <span className="font-normal text-cafe-soft">· {option.detail}</span>
                   </span>
-                  <span className="text-sm font-bold">{formatBRL(planPrice(effectivePlan, option.price))}</span>
+                  <span className="flex items-baseline gap-1.5">
+                    {hasOff && <s className="text-xs font-semibold text-cafe-soft/70">{formatBRL(option.price)}</s>}
+                    <span className="text-sm font-bold">{formatBRL(discounted)}</span>
+                  </span>
                 </button>
               );
             })}
