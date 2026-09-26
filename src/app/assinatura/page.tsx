@@ -11,8 +11,8 @@ export const metadata: Metadata = {
 };
 
 const steps = [
-  "Escolha os produtos e o tamanho",
   "Selecione Semanal ou Mensal",
+  "Escolha os produtos e o tamanho",
   "Confirme no WhatsApp",
 ];
 
@@ -36,6 +36,20 @@ export default function AssinaturaPage() {
         </p>
       </header>
 
+      <section className="mt-4 rounded-3xl border border-cafe/10 bg-white p-4 card-shadow">
+        <h2 className="font-display text-base font-semibold">Como funciona</h2>
+        <ol className="mt-2 space-y-1.5 text-sm text-cafe-soft">
+          {steps.map((step, i) => (
+            <li key={step} className="flex items-center gap-2.5">
+              <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-mel text-xs font-bold text-cafe">
+                {i + 1}
+              </span>
+              {step}
+            </li>
+          ))}
+        </ol>
+      </section>
+
       <section className="mt-4 grid gap-3 sm:grid-cols-2">
         {plans.map((item) => (
           <div key={item.plan} className="rounded-3xl border-2 border-mel-dark/40 bg-white p-4 card-shadow">
@@ -54,20 +68,6 @@ export default function AssinaturaPage() {
             </Link>
           </div>
         ))}
-      </section>
-
-      <section className="mt-4 rounded-3xl border border-cafe/10 bg-white p-4 card-shadow">
-        <h2 className="font-display text-base font-semibold">Como funciona</h2>
-        <ol className="mt-2 space-y-1.5 text-sm text-cafe-soft">
-          {steps.map((step, i) => (
-            <li key={step} className="flex items-center gap-2.5">
-              <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-mel text-xs font-bold text-cafe">
-                {i + 1}
-              </span>
-              {step}
-            </li>
-          ))}
-        </ol>
       </section>
 
       <section className="mt-4 pb-4">
