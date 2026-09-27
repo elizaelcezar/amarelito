@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, type FormEvent } from "react";
+import { useEffect, useRef, useState, type FormEvent } from "react";
 import { siteConfig } from "@/config/site";
 import { WhatsappIcon } from "@/components/icons";
 
@@ -17,6 +17,16 @@ export function CoverageRequestForm() {
   const [bairro, setBairro] = useState("");
   const [errors, setErrors] = useState<FormErrors>({});
   const [sent, setSent] = useState(false);
+  const boxRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    if (!open) return;
+    // espera renderizar o formulário e rola já no primeiro toque
+    const t = window.setTimeout(() => {
+      boxRef.current?.scrollIntoView({ behavior: "smooth", block: "nearest" });
+    }, 60);
+    return () => window.clearTimeout(t);
+  }, [open ]);
 
   function handleSubmit(event: FormEvent) {
     event.preventDefault();
@@ -46,7 +56,7 @@ export function CoverageRequestForm() {
   }
 
   return (
-    <div className="mt-3 overflow-hidden rounded-2xl bg-cream/60">
+    <div ref={boxRef} className="mt-3 scroll-mt-24 overflow-hidden rounded-2xl bg-cream/60">
       <button
         type="button"
         aria-expanded={open}
